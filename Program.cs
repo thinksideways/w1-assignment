@@ -39,7 +39,21 @@ class Program
         } while (appRunning);
     }
 
-    static void displayCharacters() {
+    static void displayCharacters()
+    {
+        Console.WriteLine("*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*\r\n");
+        foreach (String line in File.ReadAllLines("input.csv"))
+        {
+            var cols = line.Split(",");
+
+            Console.WriteLine($"Name: {cols[0]}");
+            Console.WriteLine($"Class: {cols[1]}");
+            Console.WriteLine($"Level: {cols[2]}");
+            Console.WriteLine($"Hitpoints: {cols[3]}");
+            Console.WriteLine($"Equipment: {cols[4].Replace("|", ", ")}\r\n");
+
+            Console.WriteLine("*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*\r\n");
+        }
     }
 
     static void addCharacter()
