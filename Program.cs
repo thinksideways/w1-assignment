@@ -40,6 +40,11 @@ class Program
         } while (appRunning);
     }
 
+    /** <c>displayCharacter</c>
+     * <summary>
+     * Reads characters from csv and displays them in the console.
+     * </summary>
+     **/
     static void displayCharacters()
     {
         Console.WriteLine("*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*\r\n");
@@ -57,6 +62,11 @@ class Program
         }
     }
 
+    /** <c>addCharacter</c>
+     * <summary>
+     * Adds new characters to csv.
+     * </summary>
+     **/
     static void addCharacter()
     {
         Console.WriteLine(("Character's name?: "));
@@ -71,7 +81,6 @@ class Program
         {
             Console.WriteLine("Character's level?:");
             characterLevel = Console.ReadLine();
-            Console.WriteLine(characterLevel);
         } while (!int.TryParse(characterLevel, out int level));
 
         var characterHitpoints = "";
@@ -134,6 +143,11 @@ class Program
         }
     }
 
+    /** <c>levelCharacter</c>
+     * <summary>
+     * Levels the chosen character and increases their hitpoints by 15%.
+     * </summary>
+     **/
     static void levelCharacter()
     {
 
@@ -154,8 +168,8 @@ class Program
                     List<String> characters = File.ReadAllLines("input.csv").ToList();
                     string? character = characters.FirstOrDefault(line => line.Split(",")[0].Equals(characterName));
 
-                    // Disabling null warnings specifically for this usecase since int? isn't allowing usecase for list indexing.
-                    // There's a bigger problem here if the character isn't found and an exception is thrown.
+                    // Disabling null reference warnings specifically for this usecase since a default int would make dirty data.
+                    // There's a bigger problem here if the character isn't found and an exception is thrown anyway.
                     #pragma warning disable CS8602 // Dereference of a possibly null reference.
                     #pragma warning disable CS8604 // Dereference of a possibly null reference.
                     int characterIndex = characters.IndexOf(character);
