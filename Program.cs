@@ -1,6 +1,6 @@
 ﻿namespace w1_assignment;
 using System.IO;
-
+using System.Linq;
 class Program
 {
     static void Main(string[] args)
@@ -87,7 +87,7 @@ class Program
         do
         {
             Console.WriteLine("Enter equipment (or 'done' to finish): ");
-            String item = Console.ReadLine();
+            String item = Console.ReadLine() ?? "";
 
             if (!String.IsNullOrEmpty(item) && !item.Equals("done"))
             {
@@ -110,7 +110,7 @@ class Program
         do
         {
             Console.WriteLine($"Does this look correct? (y/n)");
-            confirmation = Console.ReadLine();
+            confirmation = Console.ReadLine() ?? "";
         } while (!confirmation.Equals("y") && !confirmation.Equals("n"));
 
         if (confirmation.Equals("y"))
@@ -137,5 +137,50 @@ class Program
     static void levelCharacter()
     {
 
+        bool stillLeveling = true;
+        do
+        {
+            Console.WriteLine("Enter the name of the character you wish to level up (or q to return to main menu): ");
+            string? characterName = Console.ReadLine() ?? "";
+
+            if (characterName.Equals("q"))
+            {
+                stillLeveling = false;
+            }
+            else
+            {
+                try
+                {
+                    List<String> characters = File.ReadAllLines("input.csv").ToList();
+                    string? character = characters.FirstOrDefault(line => line.Split(",")[0].Equals(characterName));
+
+                    // Disabling null warnings specifically for this usecase since int? isn't allowing usecase for list indexing.
+                    // There's a bigger problem here if the character isn't found and an exception is thrown.
+                    #pragma warning disable CS8602 // Dereference of a possibly null reference.
+                    #pragma warning disable CS8604 // Dereference of a possibly null reference.
+                    int characterIndex = characters.IndexOf(character);
+
+                    var characterDetails = character.Split(",");
+                    characterDetails[2] = (int.Parse(characterDetails[2]) + 1).ToString();
+                    characterDetails[3] = Math.Ceiling(int.Parse(characterDetails[3]) * 1.15).ToString();
+
+                    character = String.Join(",", characterDetails);
+
+                    characters[characterIndex] = character;
+
+                    // Rewrite the entire file with the updated character list
+                    using (StreamWriter sw = new StreamWriter("input.csv", false))
+                    {
+                        foreach (string line in characters) {
+                            sw.WriteLine(line);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error finding or updating character: {e.Message}");
+                }
+            }
+        } while (stillLeveling);
     }
 }
