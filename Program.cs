@@ -31,35 +31,13 @@ class Program
 
             switch (response)
             {
-                case "1": displayCharacters(); break;
-                case "2": addCharacter(); break; //TODO: change from static void to static Character method
-                case "3": levelCharacter(); break;
+                case "1": Character.displayCharacters(); break;
+                case "2": Character.addCharacter(); break; //TODO: change from static void to static Character method
+                case "3": Character.levelCharacter(); break;
                 case "4": appRunning = false; break;
                 case "q": appRunning = false; break;
             }
         } while (appRunning);
-    }
-
-    /** <c>displayCharacter</c>
-     * <summary>
-     * Reads characters from csv and displays them in the console.
-     * </summary>
-     **/
-    static void displayCharacters()
-    {
-        Console.WriteLine("*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*\r\n");
-        foreach (String line in File.ReadAllLines("input.csv"))
-        {
-            var cols = line.Split(",");
-
-            Console.WriteLine($"Name: {cols[0]}");
-            Console.WriteLine($"Class: {cols[1]}");
-            Console.WriteLine($"Level: {cols[2]}");
-            Console.WriteLine($"Hitpoints: {cols[3]}");
-            Console.WriteLine($"Equipment: {cols[4].Replace("|", ", ")}\r\n");
-
-            Console.WriteLine("*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*\r\n");
-        }
     }
 
     /** <c>addCharacter</c>
@@ -115,6 +93,7 @@ class Program
         Console.WriteLine($"Hitpoints: {characterHitpoints}");
         Console.WriteLine($"Equpment: {string.Join("|", equipment).Replace("|", ", ")}\r\n");
 
+        
         String confirmation = "";
         do
         {
@@ -141,60 +120,5 @@ class Program
         {
             addCharacter();
         }
-    }
-
-    /** <c>levelCharacter</c>
-     * <summary>
-     * Levels the chosen character and increases their hitpoints by 15%.
-     * </summary>
-     **/
-    static void levelCharacter()
-    {
-
-        bool stillLeveling = true;
-        do
-        {
-            Console.WriteLine("Enter the name of the character you wish to level up (or q to return to main menu): ");
-            string? characterName = Console.ReadLine() ?? "";
-
-            if (characterName.Equals("q"))
-            {
-                stillLeveling = false;
-            }
-            else
-            {
-                try
-                {
-                    List<String> characters = File.ReadAllLines("input.csv").ToList();
-                    string? character = characters.FirstOrDefault(line => line.Split(",")[0].Equals(characterName));
-
-                    // Disabling null reference warnings specifically for this usecase since a default int would make dirty data.
-                    // There's a bigger problem here if the character isn't found and an exception is thrown anyway.
-                    #pragma warning disable CS8602 // Dereference of a possibly null reference.
-                    #pragma warning disable CS8604 // Dereference of a possibly null reference.
-                    int characterIndex = characters.IndexOf(character);
-
-                    var characterDetails = character.Split(",");
-                    characterDetails[2] = (int.Parse(characterDetails[2]) + 1).ToString();
-                    characterDetails[3] = Math.Ceiling(int.Parse(characterDetails[3]) * 1.15).ToString();
-
-                    character = String.Join(",", characterDetails);
-
-                    characters[characterIndex] = character;
-
-                    // Rewrite the entire file with the updated character list
-                    using (StreamWriter sw = new StreamWriter("input.csv", false))
-                    {
-                        foreach (string line in characters) {
-                            sw.WriteLine(line);
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Error finding or updating character: {e.Message}");
-                }
-            }
-        } while (stillLeveling);
     }
 }
