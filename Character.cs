@@ -51,6 +51,12 @@ class Character
         Console.WriteLine(("Character's name?: "));
         var characterName = Console.ReadLine();
 
+        // automatically add quotations to character names that contain commas
+        if (characterName.Contains(","))
+        {
+            characterName = $"\"{characterName}\"";
+        }
+
         Console.WriteLine("Character's class?: ");
         var characterClass = Console.ReadLine();
 
@@ -135,6 +141,12 @@ class Character
         {
             Console.WriteLine("Enter the name of the character you wish to level up (or q to return to main menu): ");
             string? characterName = Console.ReadLine() ?? "";
+
+            // automatically add quotations to character names that contain commas
+            if (characterName.Contains(","))
+            {
+                characterName = $"\"{characterName}\"";
+            }
 
             if (characterName.Equals("q"))
             {
