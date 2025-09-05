@@ -12,6 +12,7 @@ class Program
             "Display Characters",
             "Add Character",
             "Level Up Character",
+            "Find Character",
             "Quit (or q)" //always last
         ];
 
@@ -34,7 +35,8 @@ class Program
                 case "1": Character.displayCharacters(); break;
                 case "2": Character.addCharacter(); break; //TODO: change from static void to static Character method
                 case "3": Character.levelCharacter(); break;
-                case "4": appRunning = false; break;
+                case "4": Character.findCharacter(); break;
+                case "5": appRunning = false; break;
                 case "q": appRunning = false; break;
             }
         } while (appRunning);

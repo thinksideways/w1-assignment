@@ -193,4 +193,52 @@ class Character
             }
         } while (stillLeveling);
     }
+
+    // As I was typing out this method signature GitHub CoPilot wrote the method body based off what I had already written manually for displaying, adding, and leveling characters.
+    // I'm not really sure why or how to rewrite this, that feels gratuitous considering it based it's own logic off of mine and looks so similar to what I would have written.
+    // I don't want to rewrite it for no reason.
+    /** <c>levelCharacter</c>
+     * <summary>
+     * Levels the chosen character and increases their hitpoints by 15%.
+     * </summary>
+     **/
+    public static void findCharacter()
+    {
+        Console.WriteLine("Enter the name of the character you wish to find: ");
+        string? characterName = Console.ReadLine() ?? "";
+
+        try
+        {
+            List<String> characters = File.ReadAllLines("input.csv").ToList();
+
+            if (characterName.Contains(","))
+            {
+                characterName = $"\"{characterName}\"";
+            }
+
+            // Google/Gemini suggested regex pattern to split on commas that aren't in quotes: ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"
+            string? character = characters.FirstOrDefault(line => Regex.Split(line, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")[0].Equals(characterName));
+
+            if (character != null)
+            {
+                // Google/Gemini suggested regex pattern to split on commas that aren't in quotes: ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"
+                var characterDetails = Regex.Split(character, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+                var foundCharacter = new Character(characterDetails[0], characterDetails[1], int.Parse(characterDetails[2]), int.Parse(characterDetails[3]), characterDetails[4].Split("|"));
+
+                Console.WriteLine($"\nName: {foundCharacter.Name.Replace("\"", "")}");
+                Console.WriteLine($"Class: {foundCharacter.Class}");
+                Console.WriteLine($"Level: {foundCharacter.Level}");
+                Console.WriteLine($"Hitpoints: {foundCharacter.Hitpoints}");
+                Console.WriteLine($"Equipment: {String.Join("|", foundCharacter.Equipment).Replace("|", ", ")}\r\n");
+            }
+            else
+            {
+                Console.WriteLine($"Character '{characterName.Replace("\"", "")}' not found.");
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error finding character: {e.Message}");
+        }
+    }
 }
