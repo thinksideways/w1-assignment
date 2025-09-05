@@ -27,10 +27,10 @@ class Character
             if (count > 0)
             {
                 // Only split on commas that aren't encapsulated in quotes
-                // regex pattern came from Google/Gemini results
+                // Google/Gemini suggested regex pattern to split on commas that aren't in quotes: ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"
                 String[] cols = Regex.Split(line, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
                 var character = new Character(cols[0], cols[1], int.Parse(cols[2]), int.Parse(cols[3]), cols[4].Split("|"));
-                Console.WriteLine($"Name: {character.Name}");
+                Console.WriteLine($"Name: {character.Name.Replace("\"", "")}");
                 Console.WriteLine($"Class: {character.Class}");
                 Console.WriteLine($"Level: {character.Level}");
                 Console.WriteLine($"Hitpoints: {character.Hitpoints}");
@@ -135,18 +135,12 @@ class Character
      **/
     public static void levelCharacter()
     {
-
         bool stillLeveling = true;
+
         do
         {
             Console.WriteLine("Enter the name of the character you wish to level up (or q to return to main menu): ");
             string? characterName = Console.ReadLine() ?? "";
-
-            // automatically add quotations to character names that contain commas
-            if (characterName.Contains(","))
-            {
-                characterName = $"\"{characterName}\"";
-            }
 
             if (characterName.Equals("q"))
             {
@@ -157,7 +151,14 @@ class Character
                 try
                 {
                     List<String> characters = File.ReadAllLines("input.csv").ToList();
-                    string? character = characters.FirstOrDefault(line => line.Split(",")[0].Equals(characterName));
+
+                    if (characterName.Contains(","))
+                    {
+                        characterName = $"\"{characterName}\"";
+                    }
+
+                    // Google/Gemini suggested regex pattern to split on commas that aren't in quotes: ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"
+                    string? character = characters.FirstOrDefault(line => Regex.Split(line, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")[0].Equals(characterName));
 
                     // Disabling null reference warnings specifically for this usecase since a default int would make dirty data.
                     // There's a bigger problem here if the character isn't found and an exception is thrown anyway.
@@ -165,7 +166,8 @@ class Character
                     #pragma warning disable CS8604 // Dereference of a possibly null reference.
                     int characterIndex = characters.IndexOf(character);
 
-                    var characterDetails = character.Split(",");
+                    // Google/Gemini suggested regex pattern to split on commas that aren't in quotes: ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"
+                    var characterDetails = Regex.Split(character, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
                     characterDetails[2] = (int.Parse(characterDetails[2]) + 1).ToString();
                     characterDetails[3] = Math.Ceiling(int.Parse(characterDetails[3]) * 1.15).ToString();
 
@@ -180,6 +182,9 @@ class Character
                             sw.WriteLine(line);
                         }
                     }
+
+                    // Update the user that their character has leveled up per assignment feedback
+                    Console.WriteLine($"{characterName.Replace("\"", "")} is now level {characterDetails[2]} with {characterDetails[3]} hitpoints!");
                 }
                 catch (Exception e)
                 {
