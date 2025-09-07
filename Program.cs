@@ -1,6 +1,10 @@
 ﻿namespace w1_assignment;
+
 using System.IO;
 using System.Linq;
+
+using character;
+
 class Program
 {
     static void Main(string[] args)
@@ -32,10 +36,10 @@ class Program
 
             switch (response)
             {
-                case "1": Character.displayCharacters(); break;
-                case "2": Character.addCharacter(); break; //TODO: change from static void to static Character method
-                case "3": Character.levelCharacter(); break;
-                case "4": Character.findCharacter(); break;
+                case "1": CharacterReader.displayCharacters(); break;
+                case "2": CharacterWriter.addCharacter(); break; //TODO: change from static void to static Character method
+                case "3": CharacterWriter.levelCharacter(); break;
+                case "4": CharacterReader.findCharacter(); break;
                 case "5": appRunning = false; break;
                 case "q": appRunning = false; break;
             }
