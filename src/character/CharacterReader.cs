@@ -38,25 +38,24 @@ class CharacterReader
         {
             List<String> characters = File.ReadAllLines("input.csv").ToList();
 
-            if (characterName.Contains(","))
-            {
-                characterName = $"\"{characterName}\"";
-            }
-
             // Google/Gemini suggested regex pattern to split on commas that aren't in quotes: ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"
-            string? character = characters.FirstOrDefault(line => Regex.Split(line, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")[0].Equals(characterName));
+            var searchResults = characters.Where(character => Regex.Split(character, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")[0].Contains(characterName));
 
-            if (character != null)
+            // var character = searchResults.First();
+            if (searchResults.Any())
             {
-                // Google/Gemini suggested regex pattern to split on commas that aren't in quotes: ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"
-                var characterDetails = Regex.Split(character, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
-                var foundCharacter = new Character(characterDetails[0], characterDetails[1], int.Parse(characterDetails[2]), int.Parse(characterDetails[3]), characterDetails[4].Split("|"));
+                foreach (String result in searchResults)
+                {
+                    // Google/Gemini suggested regex pattern to split on commas that aren't in quotes: ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"
+                    var characterDetails = Regex.Split(result, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+                    var foundCharacter = new Character(characterDetails[0], characterDetails[1], int.Parse(characterDetails[2]), int.Parse(characterDetails[3]), characterDetails[4].Split("|"));
 
-                Console.WriteLine($"\nName: {foundCharacter.Name.Replace("\"", "")}");
-                Console.WriteLine($"Class: {foundCharacter.Class}");
-                Console.WriteLine($"Level: {foundCharacter.Level}");
-                Console.WriteLine($"Hitpoints: {foundCharacter.Hitpoints}");
-                Console.WriteLine($"Equipment: {String.Join("|", foundCharacter.Equipment).Replace("|", ", ")}\r\n");
+                    Console.WriteLine($"\nName: {foundCharacter.Name.Replace("\"", "")}");
+                    Console.WriteLine($"Class: {foundCharacter.Class}");
+                    Console.WriteLine($"Level: {foundCharacter.Level}");
+                    Console.WriteLine($"Hitpoints: {foundCharacter.Hitpoints}");
+                    Console.WriteLine($"Equipment: {String.Join("|", foundCharacter.Equipment).Replace("|", ", ")}\r\n");
+                }
             }
             else
             {
