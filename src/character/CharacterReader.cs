@@ -41,7 +41,6 @@ class CharacterReader
             // Google/Gemini suggested regex pattern to split on commas that aren't in quotes: ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"
             var searchResults = characters.Where(character => Regex.Split(character, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")[0].ToLower().Contains(characterName.ToLower()));
 
-            // var character = searchResults.First();
             if (searchResults.Any())
             {
                 Console.WriteLine("\r\n*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*\r\n\r\n");
