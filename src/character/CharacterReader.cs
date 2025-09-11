@@ -39,22 +39,20 @@ class CharacterReader
             List<String> characters = File.ReadAllLines("input.csv").ToList();
 
             // Google/Gemini suggested regex pattern to split on commas that aren't in quotes: ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"
-            var searchResults = characters.Where(character => Regex.Split(character, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")[0].Contains(characterName));
+            var searchResults = characters.Where(character => Regex.Split(character, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")[0].ToLower().Contains(characterName.ToLower()));
 
             // var character = searchResults.First();
             if (searchResults.Any())
             {
+                Console.WriteLine("\r\n*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*\r\n\r\n");
                 foreach (String result in searchResults)
                 {
                     // Google/Gemini suggested regex pattern to split on commas that aren't in quotes: ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"
                     var characterDetails = Regex.Split(result, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
                     var foundCharacter = new Character(characterDetails[0], characterDetails[1], int.Parse(characterDetails[2]), int.Parse(characterDetails[3]), characterDetails[4].Split("|"));
 
-                    Console.WriteLine($"\nName: {foundCharacter.Name.Replace("\"", "")}");
-                    Console.WriteLine($"Class: {foundCharacter.Class}");
-                    Console.WriteLine($"Level: {foundCharacter.Level}");
-                    Console.WriteLine($"Hitpoints: {foundCharacter.Hitpoints}");
-                    Console.WriteLine($"Equipment: {String.Join("|", foundCharacter.Equipment).Replace("|", ", ")}\r\n");
+                    Console.WriteLine(foundCharacter.ToString());
+                    Console.WriteLine("\r\n\r\n*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*\r\n");
                 }
             }
             else
