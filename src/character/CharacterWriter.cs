@@ -1,46 +1,9 @@
+namespace w1_assignment.character;
+
 using System.Text.RegularExpressions;
 
-class Character
+class CharacterWriter
 {
-    public string Name { get; set; }
-    public string Class { get; set; }
-    public int Hitpoints { get; set; }
-    public int Level { get; set; }
-    public string[] Equipment { get; set; }
-
-    public Character(string Name, string Class, int Level, int Hitpoints, string[] Equipment)
-    {
-        this.Name = Name;
-        this.Class = Class;
-        this.Level = Level;
-        this.Hitpoints = Hitpoints;
-        this.Equipment = Equipment;
-    }
-
-    public static void displayCharacters()
-    {
-        Console.WriteLine("*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*\r\n");
-
-        var count = 0;
-        foreach (String line in File.ReadAllLines("input.csv"))
-        {
-            if (count > 0)
-            {
-                // Only split on commas that aren't encapsulated in quotes
-                // Google/Gemini suggested regex pattern to split on commas that aren't in quotes: ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"
-                String[] cols = Regex.Split(line, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
-                var character = new Character(cols[0], cols[1], int.Parse(cols[2]), int.Parse(cols[3]), cols[4].Split("|"));
-                Console.WriteLine($"Name: {character.Name.Replace("\"", "")}");
-                Console.WriteLine($"Class: {character.Class}");
-                Console.WriteLine($"Level: {character.Level}");
-                Console.WriteLine($"Hitpoints: {character.Hitpoints}");
-                Console.WriteLine($"Equipment: {String.Join("|", character.Equipment).Replace("|", ", ")}\r\n");
-                Console.WriteLine("*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*\r\n");
-            }
-            count++;
-        }
-    }
-
     /** <c>addCharacter</c>
      * <summary>
      * Adds new characters to csv.
