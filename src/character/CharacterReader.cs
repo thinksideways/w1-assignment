@@ -11,7 +11,7 @@ class CharacterReader
 
         if (context.Equals("JSON")) {
             fileHandler = new JsonFileHandler();
-            filePath = "inputs.json";
+            filePath = "input.json";
         }
 
         List<Character> characters = fileHandler.ReadCharacters(filePath);
@@ -41,7 +41,7 @@ class CharacterReader
 
             if (context.Equals("JSON")) {
                 fileHandler = new JsonFileHandler();
-                filePath = "inputs.json";
+                filePath = "input.json";
             }
 
             List<Character> characters = fileHandler.ReadCharacters(filePath);

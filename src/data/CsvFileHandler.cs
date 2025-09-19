@@ -24,7 +24,7 @@ public class CsvFileHandler : IFileHandler
     }
     
     public void WriteCharacters(string filePath, List<Character> characters) { 
-        using (StreamWriter sw = new StreamWriter("input.csv", false))
+        using (StreamWriter sw = new StreamWriter(filePath, false))
         {
             // Add header row before adding character rows
             sw.WriteLine(string.Join(',', Character.GetHeaders()));

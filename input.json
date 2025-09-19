@@ -1,0 +1,210 @@
+[
+  {
+    "Name": "John",
+    "Class": "Fighter",
+    "Hitpoints": 10,
+    "Level": 1,
+    "Equipment": [
+      "sword",
+      "shield",
+      "potion"
+    ]
+  },
+  {
+    "Name": "\u0022Jane,hamlen\u0022",
+    "Class": "\u0022Wizard,Sorcerer\u0022",
+    "Hitpoints": 6,
+    "Level": 2,
+    "Equipment": [
+      "staff",
+      "robe",
+      "book"
+    ]
+  },
+  {
+    "Name": "Bob",
+    "Class": "Rogue",
+    "Hitpoints": 8,
+    "Level": 3,
+    "Equipment": [
+      "dagger",
+      "lockpick",
+      "cloak"
+    ]
+  },
+  {
+    "Name": "Alice",
+    "Class": "Cleric",
+    "Hitpoints": 12,
+    "Level": 4,
+    "Equipment": [
+      "mace",
+      "armor",
+      "potion"
+    ]
+  },
+  {
+    "Name": "Stuart",
+    "Class": "Rogue",
+    "Hitpoints": 150,
+    "Level": 102,
+    "Equipment": [
+      "bat",
+      "fedora",
+      "bow of faerdhinen"
+    ]
+  },
+  {
+    "Name": "Harry Potter",
+    "Class": "Wizard",
+    "Hitpoints": 12,
+    "Level": 8,
+    "Equipment": [
+      "wand",
+      "invisibility cloak",
+      "boom"
+    ]
+  },
+  {
+    "Name": "John Wilkes Booth",
+    "Class": "Martyr",
+    "Hitpoints": 66,
+    "Level": 66,
+    "Equipment": [
+      "revolver"
+    ]
+  },
+  {
+    "Name": "Random Witness",
+    "Class": "NPC",
+    "Hitpoints": 10,
+    "Level": 1,
+    "Equipment": [
+      ""
+    ]
+  },
+  {
+    "Name": "marky mark",
+    "Class": "musician",
+    "Hitpoints": 132,
+    "Level": 101,
+    "Equipment": [
+      "microphone",
+      "arrogant swagger bracelet"
+    ]
+  },
+  {
+    "Name": "dracula",
+    "Class": "vampyre",
+    "Hitpoints": 1041,
+    "Level": 130,
+    "Equipment": [
+      ""
+    ]
+  },
+  {
+    "Name": "Snoop Dogg",
+    "Class": "Musician",
+    "Hitpoints": 202,
+    "Level": 64,
+    "Equipment": [
+      ""
+    ]
+  },
+  {
+    "Name": "\u0022John, the Baptist\u0022",
+    "Class": "Martyr",
+    "Hitpoints": 64,
+    "Level": 32,
+    "Equipment": [
+      "bible",
+      "baptismal waters"
+    ]
+  },
+  {
+    "Name": "Darth Vader",
+    "Class": "Sith Lord",
+    "Hitpoints": 1500,
+    "Level": 9001,
+    "Equipment": [
+      "lightsaber",
+      "breathing apparatus"
+    ]
+  },
+  {
+    "Name": "\u0022Tupac Shakur\u0022",
+    "Class": "Ghost",
+    "Hitpoints": 100,
+    "Level": 50,
+    "Equipment": [
+      "bandana",
+      "gold chain",
+      "microphone"
+    ]
+  },
+  {
+    "Name": "Stuart Little",
+    "Class": "Rat",
+    "Hitpoints": 44,
+    "Level": 15,
+    "Equipment": [
+      "top hat",
+      "cheese"
+    ]
+  },
+  {
+    "Name": "Scary bear",
+    "Class": "bear",
+    "Hitpoints": 14,
+    "Level": 14,
+    "Equipment": [
+      ""
+    ]
+  },
+  {
+    "Name": "Eminem",
+    "Class": "musician",
+    "Hitpoints": 44,
+    "Level": 44,
+    "Equipment": [
+      ""
+    ]
+  },
+  {
+    "Name": "\u0022Taylor, Chuck\u0022",
+    "Class": "fashionisto",
+    "Hitpoints": 55,
+    "Level": 33,
+    "Equipment": [
+      "shoes"
+    ]
+  },
+  {
+    "Name": "smith",
+    "Class": "wizard",
+    "Hitpoints": 39,
+    "Level": 24,
+    "Equipment": [
+      ""
+    ]
+  },
+  {
+    "Name": "\u0022reedus, norman\u0022",
+    "Class": "actor",
+    "Hitpoints": 170,
+    "Level": 103,
+    "Equipment": [
+      "crossbow",
+      "motorcycle"
+    ]
+  },
+  {
+    "Name": "smithy",
+    "Class": "stranger",
+    "Hitpoints": 22,
+    "Level": 22,
+    "Equipment": [
+      ""
+    ]
+  }
+]
