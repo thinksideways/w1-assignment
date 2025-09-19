@@ -25,4 +25,14 @@ public class Character
             $"Equipment: {String.Join("|", this.Equipment).Replace("|", ", ")}"
         );
     }
+
+    public static string[] GetHeaders() {
+        return [
+            "Name",
+            "Class",
+            "Level",
+            "Hitpoints",
+            "Equipment"
+        ];
+    }
 }
