@@ -7,7 +7,7 @@ class CharacterWriter
      * Adds new characters to csv.
      * </summary>
      **/
-    public static void addCharacter()
+    public static void addCharacter(string context)
     {
         Console.WriteLine(("Character's name?: "));
         var characterName = Console.ReadLine();
@@ -72,11 +72,19 @@ class CharacterWriter
         {
             try
             {
-                using (StreamWriter sw = new StreamWriter("input.csv", true))
-                {
-                    sw.WriteLine($"{characterName},{characterClass},{characterLevel},{characterHitpoints},{string.Join("|", equipment)}");
-                    Console.WriteLine($"Character added to game: {characterName}");
+                String filePath = "input.csv";
+                IFileHandler fileHandler = new CsvFileHandler();
+
+                if (context.Equals("JSON")) {
+                    filePath = "input.json";
+                    fileHandler = new JsonFileHandler();
                 }
+
+                List<Character> characters = fileHandler.ReadCharacters(filePath);
+
+                characters.Add(new Character(characterName, characterClass, int.Parse(characterLevel), int.Parse(characterHitpoints), equipment.ToArray()));
+
+                fileHandler.WriteCharacters(filePath, characters);
             }
             catch (Exception e)
             {
@@ -85,7 +93,7 @@ class CharacterWriter
         }
         else // Recurse and allow user to re-add character
         {
-            addCharacter();
+            addCharacter(context);
         }
     }
 
@@ -117,6 +125,11 @@ class CharacterWriter
                     if (context.Equals("JSON")) {
                         filePath = "input.json";
                         fileHandler = new JsonFileHandler();
+                    }
+
+                    if (characterName.Contains(","))
+                    {
+                        characterName = $"\"{characterName}\"";
                     }
 
                     List<Character> characters = fileHandler.ReadCharacters(filePath);

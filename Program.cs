@@ -44,7 +44,7 @@ class Program
             switch (response)
             {
                 case "1": CharacterReader.displayCharacters(); break;
-                case "2": CharacterWriter.addCharacter(); break; //TODO: change from static void to static Character method
+                case "2": CharacterWriter.addCharacter(contexts[0]); break; //TODO: change from static void to static Character method
                 case "3": CharacterWriter.levelCharacter(contexts[0]); break;
                 case "4": CharacterReader.findCharacter(); break;
                 case "5": Array.Reverse(contexts); Console.WriteLine($"\r\nNow Reading and Writing to: {contexts[0]}\r\n"); break;
