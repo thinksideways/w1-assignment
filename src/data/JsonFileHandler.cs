@@ -12,13 +12,6 @@ public class JsonFileHandler : IFileHandler
     public void WriteCharacters(string filePath, List<Character> characters)
     {
         var jsonOptions = new JsonSerializerOptions { WriteIndented = true };
-
-        using (StreamWriter sw = new StreamWriter(filePath, false))
-        {
-            foreach (Character character in characters)
-            {
-                sw.WriteLine(JsonSerializer.Serialize(characters, jsonOptions));
-            }
-        }
+        File.WriteAllText(filePath, JsonSerializer.Serialize(characters, jsonOptions));
     }
 }
