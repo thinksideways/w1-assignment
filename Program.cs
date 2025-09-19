@@ -11,18 +11,25 @@ class Program
     {
         bool appRunning = true;
 
-        // TODO: Brainstorm only having to add a menu to a list and not have to change the switch statement
-        String[] menuOptions = [
-            "Display Characters",
-            "Add Character",
-            "Level Up Character",
-            "Find Character",
-            "Quit (or q)" //always last
+        // Whichever one is first is the currently selected context
+        String[] contexts = [
+            "CSV",
+            "JSON"
         ];
 
         do
         {
             int i = 0;
+
+            // Moved to app loop so we can update the current context dynamically
+            String[] menuOptions = [
+                "Display Characters",
+                "Add Character",
+                "Level Up Character",
+                "Find Character",
+                $"Toggle context to {contexts[1]} (Current: {contexts[0]})",
+                "Quit (or q)" //always last
+            ];
 
             foreach (String option in menuOptions)
             {
@@ -36,12 +43,14 @@ class Program
 
             switch (response)
             {
-                case "1": CharacterReader.displayCharacters(); break;
-                case "2": CharacterWriter.addCharacter(); break; //TODO: change from static void to static Character method
-                case "3": CharacterWriter.levelCharacter(); break;
-                case "4": CharacterReader.findCharacter(); break;
-                case "5": appRunning = false; break;
+                case "1": CharacterReader.displayCharacters(contexts[0]); break;
+                case "2": CharacterWriter.addCharacter(contexts[0]); break; //TODO: change from static void to static Character method
+                case "3": CharacterWriter.levelCharacter(contexts[0]); break;
+                case "4": CharacterReader.findCharacter(contexts[0]); break;
+                case "5": Array.Reverse(contexts); Console.WriteLine($"\r\nNow Reading and Writing to: {contexts[0]}\r\n"); break;
+                case "6": appRunning = false; break;
                 case "q": appRunning = false; break;
+                default: Console.WriteLine("Please choose a valid option from the list."); break;
             }
         } while (appRunning);
     }

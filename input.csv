@@ -1,4 +1,4 @@
-Name,Class,Level,Hitpoints,Inventory
+Name,Class,Level,Hitpoints,Equipment
 John,Fighter,1,10,sword|shield|potion
 "Jane,hamlen","Wizard,Sorcerer",2,6,staff|robe|book
 Bob,Rogue,3,8,dagger|lockpick|cloak
@@ -8,7 +8,7 @@ Harry Potter,Wizard,8,12,wand|invisibility cloak|boom
 John Wilkes Booth,Martyr,66,66,revolver
 Random Witness,NPC,1,10,
 marky mark,musician,101,132,microphone|arrogant swagger bracelet
-dracula,vampyre,128,788,
+dracula,vampyre,130,1041,
 Snoop Dogg,Musician,64,202,
 "John, the Baptist",Martyr,32,64,bible|baptismal waters
 Darth Vader,Sith Lord,9001,1500,lightsaber|breathing apparatus
@@ -16,3 +16,7 @@ Darth Vader,Sith Lord,9001,1500,lightsaber|breathing apparatus
 Stuart Little,Rat,15,44,top hat|cheese
 Scary bear,bear,14,14,
 Eminem,musician,44,44,
+"Taylor, Chuck",fashionisto,33,55,shoes
+smith,wizard,24,39,
+"reedus, norman",actor,103,170,crossbow|motorcycle
+smithy,stranger,22,22,

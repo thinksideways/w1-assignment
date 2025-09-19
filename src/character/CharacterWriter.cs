@@ -1,5 +1,3 @@
-namespace w1_assignment.character;
-
 using System.Text.RegularExpressions;
 
 class CharacterWriter
@@ -9,7 +7,7 @@ class CharacterWriter
      * Adds new characters to csv.
      * </summary>
      **/
-    public static void addCharacter()
+    public static void addCharacter(string context)
     {
         Console.WriteLine(("Character's name?: "));
         var characterName = Console.ReadLine();
@@ -74,11 +72,19 @@ class CharacterWriter
         {
             try
             {
-                using (StreamWriter sw = new StreamWriter("input.csv", true))
-                {
-                    sw.WriteLine($"{characterName},{characterClass},{characterLevel},{characterHitpoints},{string.Join("|", equipment)}");
-                    Console.WriteLine($"Character added to game: {characterName}");
+                String filePath = "input.csv";
+                IFileHandler fileHandler = new CsvFileHandler();
+
+                if (context.Equals("JSON")) {
+                    filePath = "input.json";
+                    fileHandler = new JsonFileHandler();
                 }
+
+                List<Character> characters = fileHandler.ReadCharacters(filePath);
+
+                characters.Add(new Character(characterName, characterClass, int.Parse(characterLevel), int.Parse(characterHitpoints), equipment.ToArray()));
+
+                fileHandler.WriteCharacters(filePath, characters);
             }
             catch (Exception e)
             {
@@ -87,7 +93,7 @@ class CharacterWriter
         }
         else // Recurse and allow user to re-add character
         {
-            addCharacter();
+            addCharacter(context);
         }
     }
 
@@ -96,7 +102,7 @@ class CharacterWriter
      * Levels the chosen character and increases their hitpoints by 15%.
      * </summary>
      **/
-    public static void levelCharacter()
+    public static void levelCharacter(string context)
     {
         bool stillLeveling = true;
 
@@ -113,41 +119,27 @@ class CharacterWriter
             {
                 try
                 {
-                    List<String> characters = File.ReadAllLines("input.csv").ToList();
+                    String filePath = "input.csv";
+                    IFileHandler fileHandler = new CsvFileHandler();
+
+                    if (context.Equals("JSON")) {
+                        filePath = "input.json";
+                        fileHandler = new JsonFileHandler();
+                    }
 
                     if (characterName.Contains(","))
                     {
                         characterName = $"\"{characterName}\"";
                     }
 
-                    // Google/Gemini suggested regex pattern to split on commas that aren't in quotes: ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"
-                    string? character = characters.FirstOrDefault(line => Regex.Split(line, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")[0].Equals(characterName));
-
-                    // Disabling null reference warnings specifically for this usecase since a default int would make dirty data.
-                    // There's a bigger problem here if the character isn't found and an exception is thrown anyway.
-                    #pragma warning disable CS8602 // Dereference of a possibly null reference.
-                    #pragma warning disable CS8604 // Dereference of a possibly null reference.
-                    int characterIndex = characters.IndexOf(character);
-
-                    // Google/Gemini suggested regex pattern to split on commas that aren't in quotes: ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"
-                    var characterDetails = Regex.Split(character, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
-                    characterDetails[2] = (int.Parse(characterDetails[2]) + 1).ToString();
-                    characterDetails[3] = Math.Ceiling(int.Parse(characterDetails[3]) * 1.15).ToString();
-
-                    character = String.Join(",", characterDetails);
-
+                    List<Character> characters = fileHandler.ReadCharacters(filePath);
+                    Character character = characters.FirstOrDefault(ch => ch.Name.Equals(characterName));
+                    character.Level = character.Level + 1;
+                    character.Hitpoints = (int)(character.Hitpoints * 1.15);
+                    int characterIndex = characters.FindIndex(ch => ch.Name.Equals(characterName));
                     characters[characterIndex] = character;
 
-                    // Rewrite the entire file with the updated character list
-                    using (StreamWriter sw = new StreamWriter("input.csv", false))
-                    {
-                        foreach (string line in characters) {
-                            sw.WriteLine(line);
-                        }
-                    }
-
-                    // Update the user that their character has leveled up per assignment feedback
-                    Console.WriteLine($"{characterName.Replace("\"", "")} is now level {characterDetails[2]} with {characterDetails[3]} hitpoints!");
+                    fileHandler.WriteCharacters(filePath, characters);
                 }
                 catch (Exception e)
                 {

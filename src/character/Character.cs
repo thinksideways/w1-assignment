@@ -1,4 +1,4 @@
-class Character
+public class Character
 {
     public string Name { get; set; }
     public string Class { get; set; }
@@ -24,5 +24,15 @@ class Character
             $"Hitpoints: {this.Hitpoints}\n" +
             $"Equipment: {String.Join("|", this.Equipment).Replace("|", ", ")}"
         );
+    }
+
+    public static string[] GetHeaders() {
+        return [
+            "Name",
+            "Class",
+            "Level",
+            "Hitpoints",
+            "Equipment"
+        ];
     }
 }
